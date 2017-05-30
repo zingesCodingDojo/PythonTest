@@ -1,0 +1,23 @@
+*{
+    margin: 0px auto;
+}
+    /*Master Div is also known as "Wrapper" it will wrap all content.*/
+    #master{
+        width: 100%;
+    }
+    /*Form fields.*/
+    #RegisterFieldset, #LoginFieldset{
+        width: 40%;
+        display: inline-block;
+        text-align: left;
+        vertical-align: top;
+    }
+        ul{
+            display:inline-block;
+        }
+        input, label{
+            display: block;
+        }
+        #RegistrationFieldset, p{
+            font-size: 0.75em;
+        }

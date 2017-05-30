@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Python Belt Test - Logged In Page</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'TravelerApp/CSS/TravelerAppCSS.css' %}" media="screen" title="no_title" charset="utf-8">
+        <meta name="description" content="Logged in">
+        <meta name="keywords" content="HTML, CSS, Python, Django, SQL">
+        <meta name="author" content="Carlos Gutz">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="master">
+            <form action="{% url 'wishlist:logout' %}" method="POST">
+                {% csrf_token %}
+                <button style="float:right" id="Logout" type="submit" name="Logout" value="Logout">Logout</button>
+            </form>
+
+            <h1>Greetings, {{ request.session.logged_user }}.</h1>
+            <h2>Personal Wishlist</h2>
+            <table id="user_wishlist">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Added By</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for items in current_user %}
+
+                    <tr>
+                        <td><a href="{% url 'wishlist:items' id=items.id%}">{{ items.item }}</a></td>
+
+                        <td>{{ items.user.name }}</td>
+                        <td>{{ items.created_at }}</td>
+                        {% if items.user.id == request.session.full_user %}
+                            <td><a href="{% url 'wishlist:delete' id=items.id%}">Delete</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% for items in wanted_item %}
+                    <tr>
+                        <td><a href="{% url 'wishlist:items' id=items.id%}">{{ items.item.item }}</a></td>
+                        <td>{{ items.liked_user.name }}</td>
+                        <td>{{ items.created_at }}</td>
+                        <td><a href="{% url 'wishlist:remove' id=items.id%}">Remove From Wishlist</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+            <h2>All others wishlist items</h2>
+            <table id="all_wishlist_items">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Added By</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for items in gimme_name %}
+                    <tr>
+                        <td><a href="{% url 'wishlist:items' id=items.id%}">{{ items.item }}</a></td>
+                        <td>{{ items.user.name }}</td>
+                        <td>{{ items.created_at }}</td>
+                        <td><a href="{% url 'wishlist:join_items' id=items.id %}">Add to my wishlist</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'wishlist:new_item' %}">Create A New Wishlist Item</a>
+        </div>
+    </body>
+</html>

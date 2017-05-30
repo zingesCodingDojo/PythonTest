@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Python Belt Test - New Item Page</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'WishlistApp/CSS/WishlistAppCSS.css' %}" media="screen" title="no_title" charset="utf-8">
+        <meta name="description" content="Adding a travel plan!">
+        <meta name="keywords" content="HTML, CSS, Python, Django, SQL">
+        <meta name="author" content="Carlos Gutz">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="master">
+            <form action="{% url 'wishlist:logout' %}" method="POST">
+                {% csrf_token %}
+                <button style="float:right" id="Logout" type="submit" name="Logout" value="Logout">Logout</button>
+            </form>
+            <form action="{% url 'wishlist:index' %}" method="POST">
+                {% csrf_token %}
+                <button style="float:left" id="wishlist_page" type="submit" name="MainPage" value="MainPage">Return to Main Page</button>
+            </form>
+            <fieldset>
+                <legend>Add New Item</legend>
+                <form action="{% url 'wishlist:add_new_items' %}" method="POST">
+                    {% csrf_token %}
+                    <ul>
+                        <label for="destination">Item/Product:</label>
+                    </ul>
+                    <ul>
+                        <input type="text" name="item" placeholder="example: Iphone">
+
+                    </ul>
+                    <button type="submit" name="AddItem" value="AddItem">Add</button>
+                </form>
+                {% for errors in messages %}
+                    <p>{{ errors }}</p>
+                {% endfor %}
+            </fieldset>
+        </div>
+    </body>
+</html>

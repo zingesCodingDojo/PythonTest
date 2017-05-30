@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Python Belt Test - Items Page</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'WishlistApp/CSS/WishlistAppCSS.css' %}" media="screen" title="no_title" charset="utf-8">
+        <meta name="description" content="Checking out an Item">
+        <meta name="keywords" content="HTML, CSS, Python, Django, SQL">
+        <meta name="author" content="Carlos Gutz">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="master">
+            <form class="tripdee" action="{% url 'wishlist:logout' %}" method="POST">
+                {% csrf_token %}
+                <button style="float:right" id="Logout" type="submit" name="Logout" value="Logout">Logout</button>
+            </form>
+            <form class="tripdee" action="{% url 'wishlist:index' %}" method="POST">
+                {% csrf_token %}
+                <button style="float:left" id="items_page" type="submit" name="MainPage" value="MainPage">Return to Main Page</button>
+            </form>
+            <fieldset id="TripDeetz">
+                <h1>Item Details:</h1>
+                {% if current_stuff %}
+                <h2>{{ current_stuff.item }}</h2>
+                {% endif %}
+
+            </fieldset>
+            <h2>Others Wanting this item:</h2>
+
+            {% for items in multiusers %}
+                <p>{{ items.item.user.name }}</p>
+            {% endfor %}
+        </div>
+    </body>
+</html>
